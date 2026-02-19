@@ -29,6 +29,7 @@ interface TaskListProps {
   initialTotal: number;
 }
 
+
 export default function TaskList({ initialTasks, initialTotal }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [totalCount, setTotalCount] = useState(initialTotal);
