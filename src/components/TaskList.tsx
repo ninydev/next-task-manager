@@ -22,7 +22,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { toggleTaskStatusAction } from "@/actions/tasks";
-import { useState, useTransition, useEffect, useCallback } from "react";
+import { useState, useTransition, useEffect, useCallback, useRef } from "react";
 
 interface TaskListProps {
   initialTasks: Task[];
@@ -36,6 +36,7 @@ export default function TaskList({ initialTasks, initialTotal }: TaskListProps) 
   const [pageSize, setPageSize] = useState(5);
   const [, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
+  const isFirstRender = useRef(true);
 
   // Функція для завантаження даних з API
   const fetchTasks = useCallback(async (currentPage: number, currentPageSize: number) => {
@@ -69,13 +70,15 @@ export default function TaskList({ initialTasks, initialTotal }: TaskListProps) 
 
   // Завантаження при зміні сторінки або розміру
   useEffect(() => {
-    // Якщо це перша сторінка і ми маємо початкові дані, не робимо зайвий запит
-    const isInitialData = page === 1 && pageSize === 5 && tasks === initialTasks;
-    
-    if (isInitialData) return;
+    // Якщо це перший рендер, дані вже отримані від сервера в initialTasks
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     
     fetchTasks(page, pageSize);
-  }, [page, pageSize, fetchTasks, initialTasks, tasks]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, fetchTasks]);
 
   // Оновлення статусу через Server Action
   const handleToggle = async (id: string, completed: boolean) => {
