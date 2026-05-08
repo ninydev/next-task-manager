@@ -26,7 +26,7 @@ export default function AboutPage() {
         <Typography variant="h5" component="h2" gutterBottom sx={{ mt: 4, fontWeight: 'medium' }}>
           Огляд проєкту
         </Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1">
           Необхідно розробити <strong>Task Tracker</strong> — веб-додаток для управління списком завдань з авторизацією, розділенням серверної/клієнтської логіки та real-time повідомленнями.
         </Typography>
 
@@ -134,7 +134,7 @@ export default function AboutPage() {
 
         <Divider sx={{ my: 4 }} />
 
-        <Box sx={{ textAlign: 'center', bgcolor: 'grey.100', p: 3, borderRadius: 1 }}>
+        <Box sx={{ textAlign: 'center', p: 3, borderRadius: 1 }}>
           <Typography variant="h6" gutterBottom>
             Термін виконання: 3–5 днів
           </Typography>
